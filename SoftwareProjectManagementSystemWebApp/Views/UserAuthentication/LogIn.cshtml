@@ -1,0 +1,37 @@
+﻿@model SoftwareProjectManagementSystemWebApp.Models.User
+
+@{
+    ViewBag.Title = "LogIn";
+}
+
+<h2>LogIn</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(l=>l.Email, "User Email")
+    <br/>
+    @Html.TextBoxFor(t => t.Email, null, new {@class="form-control"})
+    <br/>
+    @Html.ValidationMessageFor(v => v.Email)
+    <br/>
+    
+    @Html.LabelFor(l=>l.Password, "Password")
+    <br/>
+    @Html.PasswordFor(t => t.Password, new { @class = "form-control" })
+    <br/>
+    @Html.ValidationMessageFor(v => v.Password)
+    <br/>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Log in" class="btn btn-default" />
+        </div>
+    </div>
+    <br/>
+    <label>@ViewBag.ErrorMessage</label>
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+

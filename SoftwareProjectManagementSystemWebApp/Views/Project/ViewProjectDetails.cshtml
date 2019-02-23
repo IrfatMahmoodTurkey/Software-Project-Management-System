@@ -1,0 +1,148 @@
+﻿@using SoftwareProjectManagementSystemWebApp.Models
+@using SoftwareProjectManagementSystemWebApp.Models.ViewModels
+
+@{
+    ViewBag.Title = "ViewProjectDetails";
+    ProjectDetail projectDetail = ViewBag.ProjectDetails;
+}
+
+<h2>ViewProjectDetails</h2>
+
+
+@Html.Label("Project Name")
+<br/>
+@Html.TextBox("ProjectName",@projectDetail.ProjectName, new {disabled="disabled", @class="form-control"})
+<br/>
+
+@Html.Label("Project Code")
+<br />
+@Html.TextBox("ProjectCode", @projectDetail.CodeName, new { disabled = "disabled", @class = "form-control" })
+<br/>
+
+@Html.Label("Description")
+<br />
+@Html.TextArea("Description", @projectDetail.Description, new { disabled = "disabled", @class = "form-control", rows=5})
+<br/>
+
+@Html.Label("Status")
+<br />
+@Html.TextBox("Status", @projectDetail.Status, new { disabled = "disabled", @class="form-control" })
+<br/>
+
+@Html.Label("Possible Start Date")
+<br />
+@Html.TextBox("PossibleStartDate", @projectDetail.StartDate, new { disabled = "disabled", @class="form-control"})
+<br/>
+
+@Html.Label("Possible End Date")
+<br />
+@Html.TextBox("PossibleEndDate", @projectDetail.EndDate, new { disabled = "disabled", @class="form-control" })
+<br/>
+
+@Html.Label("Duration (In days)")
+<br />
+@Html.TextBox("Duration", null, new {disabled="disabled", @class="form-control"})
+<br/>
+
+<hr/>
+@Html.Label("Uploaded Files")
+<br/>
+<table class="table">
+    <thead>
+    <tr>
+        <td>File Name</td>
+        <td>Download</td>
+    </tr>
+    </thead>
+    <tbody>
+    @{
+        foreach (FileUrl fileUrl in ViewBag.ProjectFiles)
+        {
+            <tr>
+                <td>@fileUrl.FileName</td>
+                <td>@Html.ActionLink("Download", "DownloadFile", new {fileName = fileUrl.FileName, url = fileUrl.FileLocation})</td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>
+
+<hr />
+@Html.Label("Assigned Members")
+<br />
+<table class="table">
+    <thead>
+    <tr>
+        <td>Name</td>
+        <td>Designation</td>
+    </tr>
+    </thead>
+    <tbody>
+    @{
+        foreach (UserViewModel userViewModel in ViewBag.GetAssignedMembers)
+        {
+            <tr>
+                <td>@userViewModel.Name</td>
+                <td>@userViewModel.Designation</td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>
+
+<hr/>
+@Html.Label("Task Lists")
+<br />
+<table class="table">
+    <thead>
+    <tr>
+        <td>Description</td>
+        <td>Assigned To</td>
+        <td>Priority</td>
+        <td>Assigned By</td>
+        <td>Due Date</td>
+        <td>Update</td>
+        <td>View Comment</td>
+    </tr>
+    </thead>
+    <tbody>
+    @{
+        foreach (TaskListViewModel taskListViewModel in ViewBag.TaskList)
+        {
+            <tr>
+                <td>@taskListViewModel.Description</td>
+                <td>@taskListViewModel.AssignedTo</td>
+                <td>@taskListViewModel.Priority</td>
+                <td>@taskListViewModel.AssignedBy</td>
+                <td>@taskListViewModel.DueDate</td>
+                <td>@Html.ActionLink("Update", "UpdateTask", "Task", new {taskId = taskListViewModel.Id}, null)</td>
+                <td>@Html.ActionLink("View Comment", "ViewComment", "Comment", new {taskId = taskListViewModel.Id}, null)</td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>
+<br/>
+
+<script>
+    var startDateInput = document.getElementById("PossibleStartDate").value;
+    var endDateInput = document.getElementById("PossibleEndDate").value;
+
+    var startYear = startDateInput.substring(6, 10);
+    var startMonth = startDateInput.substring(3, 5);
+    var startDate = startDateInput.substring(0, 2);
+
+    var endYear = endDateInput.substring(6, 10);
+    var endMonth = endDateInput.substring(3, 5);
+    var endDate = endDateInput.substring(0, 2);
+
+    var startDateMain = new Date(startYear, startMonth, startDate);
+    var endDateMain = new Date(endYear, endMonth, endDate);
+
+    var oneDay = 24 * 60 * 60 * 1000;
+
+    var diffDays = Math.round(Math.abs((startDateMain.getTime() - endDateMain.getTime()) / (oneDay)));
+
+    document.getElementById("Duration").value = diffDays;
+</script>
+

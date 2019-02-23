@@ -1,0 +1,94 @@
+﻿@model SoftwareProjectManagementSystemWebApp.Models.Task
+
+@{
+    ViewBag.Title = "UpdateTask";
+}
+
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-datepicker3.min.css" rel="stylesheet" />
+
+<h2>UpdateTask</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(h => h.Id)
+    @Html.HiddenFor(h => h.ProjectId)
+    @Html.HiddenFor(h => h.AssignedToId)
+
+    @Html.Label("Project Name")
+    <br />
+    @Html.TextBox("ProjectName", null, new { disabled = "disabled", value = @ViewBag.ProjectName, @class="form-control" })
+    <br/>
+    <br />
+
+    @Html.Label("User")
+    <br />
+    @Html.TextBox("UserName", null, new { disabled = "disabled", value = @ViewBag.UserName, @class="form-control" })
+    <br />
+    <br />
+
+    @Html.LabelFor(l => l.Description, "Description")
+    <br />
+    @Html.TextAreaFor(d => d.Description, new {@class="form-control", rows=5})
+    <br />
+    @Html.ValidationMessageFor(v => v.Description)
+    <br />
+
+    @Html.LabelFor(l => l.DueDate, "Due Date")
+    <br />
+    @Html.TextBoxFor(d => d.DueDate, null, new {@class="form-control"})
+    <br />
+    @Html.ValidationMessageFor(v => v.DueDate)
+    <br />
+
+    @Html.LabelFor(l => l.Priority, "Priority")
+    <br />
+    <select name="Priority" class="form-control">
+        @{
+    if (ViewBag.SelectedIndex == "High")
+    {
+        <option value="High" selected="selected">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+    }
+    else if (ViewBag.SelectedIndex == "Medium")
+    {
+        <option value="High">High</option>
+    <option value="Medium" selected="selected">Medium</option>
+            <option value="Low">Low</option>
+    }
+    else
+    {
+        <option value="High">High</option>
+            <option value="Medium">Medium</option>
+    <option value="Low" selected="selected">Low</option>
+    }
+}
+    </select>
+    <br />
+    @Html.ValidationMessageFor(v => v.Priority)
+    <br />
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Update" class="btn btn-default" />
+        </div>
+    </div>
+    <br />
+
+    <label>@ViewBag.Response</label>
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+
+<script>
+    $('#DueDate').datepicker({
+        format: "dd/mm/yyyy",
+        daysOfWeekHighlighted: "5"
+    });
+</script>

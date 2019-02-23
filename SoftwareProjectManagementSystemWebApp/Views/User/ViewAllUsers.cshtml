@@ -1,0 +1,39 @@
+﻿@using SoftwareProjectManagementSystemWebApp.Models.ViewModels
+
+@{
+    ViewBag.Title = "ViewAllUsers";
+}
+
+<h2>ViewAllUsers</h2>
+<br />
+<label>@ViewBag.Message</label>
+<br />
+
+<table class="table">
+    <thead>
+    <tr>
+        <td>Name</td>
+        <td>Email</td>
+        <td>Designation</td>
+        <td>Status</td>
+        <td>Reset Password</td>
+        <td>Update</td>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (UserViewModel user in ViewBag.ViewAllUsers)
+    {
+        <tr>
+            <td>@user.Name</td>
+            <td>@user.Email</td>
+            <td>@user.Designation</td>
+            <td>@user.Status</td>
+            <td>@Html.ActionLink("Reset Password", "ResetPassword", new {id = user.Id})</td>
+            <td>@Html.ActionLink("Update", "UpdateUser", new {id = user.Id})</td>
+        </tr>
+    }
+    </tbody>
+</table>
+<br/>
+@Html.ActionLink("Save User", "SaveUser")
+

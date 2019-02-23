@@ -1,0 +1,39 @@
+﻿@using SoftwareProjectManagementSystemWebApp.Models.ViewModels
+
+@{
+    ViewBag.Title = "ViewComment";
+}
+
+<h2>ViewComment</h2>
+
+@Html.Label("Project Name")
+<br/>
+@Html.TextBox("ProjectName", null, new { disabled = "disabled", value = @ViewBag.ProjectName, @class="form-control" })
+<br/>
+
+@Html.Label("Task Name")
+<br />
+@Html.TextBox("TaskName", null, new { disabled = "disabled", value = @ViewBag.TaskName, @class = "form-control" })
+<br/>
+
+<table class="table">
+    <thead>
+    <tr>
+        <td>Comment</td>
+        <td>By</td>
+        <td>Date Time</td>
+    </tr>
+    </thead>
+    <tbody>
+    @{
+        foreach (CommentViewModel comment in ViewBag.Comments)
+        {
+            <tr>
+                <td>@comment.Comment</td>
+                <td>@comment.CommentBy</td>
+                <td>@comment.DateTime</td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>

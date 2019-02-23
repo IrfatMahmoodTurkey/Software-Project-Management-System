@@ -1,0 +1,36 @@
+﻿@using SoftwareProjectManagementSystemWebApp.Models.ViewModels
+
+@{
+    ViewBag.Title = "ViewProjectInvolve";
+}
+
+<h2>ViewProjectInvolve</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <td>Project Name</td>
+        <td>Short Name</td>
+        <td>Status</td>
+        <td>No of Members</td>
+        <td>No of Tasks</td>
+        <td>View Details</td>
+    </tr>
+    </thead>
+    <tbody>
+    @{
+        foreach (ProjectInvolveViewModel projectInvolveViewModel in ViewBag.Projects)
+        {
+            <tr>
+                <td>@projectInvolveViewModel.ProjectName</td>
+                <td>@projectInvolveViewModel.ProjectShortName</td>
+                <td>@projectInvolveViewModel.Status</td>
+                <td>@projectInvolveViewModel.NoOfMembers</td>
+                <td>@projectInvolveViewModel.NoOfTasks</td>
+                <td>@Html.ActionLink("View Details","ViewProjectDetails",new {projectId = @projectInvolveViewModel.ProjectId})</td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>
+

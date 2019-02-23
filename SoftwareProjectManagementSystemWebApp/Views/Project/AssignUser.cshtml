@@ -1,0 +1,56 @@
+﻿@using SoftwareProjectManagementSystemWebApp.Models.ViewModels
+@model SoftwareProjectManagementSystemWebApp.Models.AssignUser
+
+@{
+    ViewBag.Title = "AssignUser";
+}
+
+<h2>AssignUser</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(l=>l.ProjectId, "Select Project")
+    <br/>
+    @Html.DropDownListFor(d => d.ProjectId, new SelectList(ViewBag.Projects, "Value", "Text"), new {@class="form-control"})
+    <br/>
+    
+    @Html.LabelFor(l=>l.UserId, "Select Project")
+    <br/>
+    @Html.DropDownListFor(d => d.UserId, new SelectList(ViewBag.Users, "Value", "Text"), new {@class = "form-control"})
+    <br/>
+
+    <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Assign" class="btn btn-default"/>
+            </div>
+        </div>
+    <br/>
+    <label>@ViewBag.Response</label>
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<br/>
+
+<table class="table">
+    <thead>
+    <tr>
+        <td>Project Name</td>
+        <td>Resource Person</td>
+        <td>Designation</td>
+    </tr>
+    </thead>
+    <tbody>
+    @{
+        foreach (AssignResourcePersonViewModel resourceModel in ViewBag.AssignedUser)
+        {
+            <tr>
+                <td>@resourceModel.ProjectName</td>
+                <td>@resourceModel.ResourceName</td>
+                <td>@resourceModel.Designation</td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>

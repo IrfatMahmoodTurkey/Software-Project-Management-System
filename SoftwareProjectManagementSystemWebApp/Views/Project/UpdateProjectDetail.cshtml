@@ -1,0 +1,178 @@
+﻿@model SoftwareProjectManagementSystemWebApp.Models.ProjectDetail
+
+@{
+    ViewBag.Title = "UpdateProjectDetail";
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-datepicker3.min.css" rel="stylesheet" />
+
+<h2>UpdateProjectDetail</h2>
+
+@using (Html.BeginForm("UpdateProjectDetail", "Project",
+                     FormMethod.Post, new { id = "attachment", enctype = "multipart/form-data", encoding = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>ProjectDetail</h4>
+        <hr/>
+
+        @Html.ValidationSummary(true)
+
+        @Html.HiddenFor(h => h.Id)
+        @Html.HiddenFor(h => h.ProjectCode)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProjectName, new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ProjectName, null, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.ProjectName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CodeName, new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.CodeName, null, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.CodeName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Description, new {@class = "form-control", rows = 5})
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StartDate, new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.StartDate, null, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.StartDate)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EndDate, new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.EndDate, null, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.EndDate)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Duration", new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.TextBox("Duration", null, new {@readonly = "readonly", onfocus = "showDuration()", @class = "form-control"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Select File", new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.DropDownList("selectedFile", new SelectList(ViewBag.Files, "Value", "Text"), new {@class = "form-control"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("File", new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                <input type="file" name="file" class="btn btn-default"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.RadioButtonFor(model => model.Status, "Not Started")Not Started
+                @Html.RadioButtonFor(model => model.Status, "Started")Started
+                @Html.RadioButtonFor(model => model.Status, "Completed")Completed
+                @Html.RadioButtonFor(model => model.Status, "Cancelled")Cancelled
+
+                @Html.ValidationMessageFor(model => model.Status)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Update" class="btn btn-default"/>
+            </div>
+        </div>
+
+        <br/>
+        <label>@ViewBag.Response</label>
+    </div>
+    <br/>
+    @Html.ActionLink("Back to List","ViewAllProject","Project")
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+
+
+@* duration of time between two date *@
+<script>
+    function showDuration() {
+        var startDateInput = document.getElementById("StartDate").value;
+        var endDateInput = document.getElementById("EndDate").value;
+
+        var startYear = startDateInput.substring(6, 10);
+        var startMonth = startDateInput.substring(3, 5);
+        var startDate = startDateInput.substring(0, 2);
+
+        var endYear = endDateInput.substring(6, 10);
+        var endMonth = endDateInput.substring(3, 5);
+        var endDate = endDateInput.substring(0, 2);
+
+        var startDateMain = new Date(startYear, startMonth, startDate);
+        var endDateMain = new Date(endYear, endMonth, endDate);
+
+        var oneDay = 24 * 60 * 60 * 1000;
+
+        var diffDays = Math.round(Math.abs((startDateMain.getTime() - endDateMain.getTime()) / (oneDay)));
+
+        document.getElementById("Duration").value = diffDays;
+    }
+</script>
+
+<script>
+    var startDateInput = document.getElementById("StartDate").value;
+    var endDateInput = document.getElementById("EndDate").value;
+
+    var startYear = startDateInput.substring(6, 10);
+    var startMonth = startDateInput.substring(3, 5);
+    var startDate = startDateInput.substring(0, 2);
+
+    var endYear = endDateInput.substring(6, 10);
+    var endMonth = endDateInput.substring(3, 5);
+    var endDate = endDateInput.substring(0, 2);
+
+    var startDateMain = new Date(startYear, startMonth, startDate);
+    var endDateMain = new Date(endYear, endMonth, endDate);
+
+    var oneDay = 24 * 60 * 60 * 1000;
+
+    var diffDays = Math.round(Math.abs((startDateMain.getTime() - endDateMain.getTime()) / (oneDay)));
+
+    document.getElementById("Duration").value = diffDays;
+</script>
+
+<script>
+    $('#StartDate').datepicker({
+        format: "dd/mm/yyyy",
+        daysOfWeekHighlighted: "5"
+    });
+</script>
+<script>
+    $('#EndDate').datepicker({
+        format: "dd/mm/yyyy",
+        daysOfWeekHighlighted: "5"
+    });
+</script>
+

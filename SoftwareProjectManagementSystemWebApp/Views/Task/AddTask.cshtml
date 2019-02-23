@@ -1,0 +1,102 @@
+﻿@model SoftwareProjectManagementSystemWebApp.Models.Task
+
+@{
+    ViewBag.Title = "AddTask";
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet"/>
+<link href="~/Content/bootstrap-datepicker3.min.css" rel="stylesheet" />
+
+<h2>AddTask</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(l=>l.ProjectId, "Project")
+    <br/>
+    @Html.DropDownListFor(d=>d.ProjectId, new SelectList(ViewBag.Projects, "Value","Text"), new {@class="form-control"})
+    <br/>
+    @Html.ValidationMessageFor(v=>v.ProjectId)
+    <br/>
+    
+    @Html.Label("User")
+    <br/>
+    @Html.DropDownListFor(d => d.AssignedToId, new SelectList(""), "-- Select User --", new { @class = "form-control" })
+    <br/>
+    @Html.ValidationMessageFor(v=>v.AssignedToId)
+    <br/>
+    
+    @Html.LabelFor(l=>l.Description, "Description")
+    <br/>
+    @Html.TextAreaFor(d => d.Description, new {@class="form-control", rows=5})
+    <br/>
+    @Html.ValidationMessageFor(v => v.Description)
+    <br/>
+    
+    @Html.LabelFor(l=>l.DueDate, "Due Date")
+    <br/>
+    @Html.TextBoxFor(d => d.DueDate, null, new {@class="form-control"})
+    <br/>
+    @Html.ValidationMessageFor(v => v.DueDate)
+    <br/>
+    
+    @Html.LabelFor(l=>l.Priority, "Priority")
+    <br/>
+    <select name="Priority" class="form-control">
+        <option value="High">High</option>
+        <option value="Medium">Medium</option>
+        <option value="Low">Low</option>
+    </select>
+    <br/>
+    @Html.ValidationMessageFor(v => v.Priority)
+    <br/>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Add Task" class="btn btn-default" />
+        </div>
+    </div>
+    <br/>
+    
+    <label>@ViewBag.Response</label>
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#ProjectId").change(function () {
+                var projectId = $("#ProjectId").val();
+                var json = { projectId: projectId };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetUserByProject", "Task")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        $("#AssignedToId").empty();
+                        $("#AssignedToId").append('<option value = "">-- Select User --</option>');
+                        $.each(data, function (key, value) {
+                            $("#AssignedToId").append('<option value=' + value.Id + '>' + value.Name + '</option>');
+
+                        });
+
+                    }
+                });
+            });
+        });
+    </script>
+}
+
+<script>
+    $('#DueDate').datepicker({
+        format: "dd/mm/yyyy",
+        daysOfWeekHighlighted: "5"
+    });
+</script>
+

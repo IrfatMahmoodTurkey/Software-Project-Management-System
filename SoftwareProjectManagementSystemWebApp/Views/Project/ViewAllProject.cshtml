@@ -1,0 +1,36 @@
+﻿@using SoftwareProjectManagementSystemWebApp.Models.ViewModels
+
+@{
+    ViewBag.Title = "ViewAllProject";
+}
+
+<h2>ViewAllProject</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <td>Project Name</td>
+        <td>Code Name</td>
+        <td>Started Date</td>
+        <td>End Date</td>
+        <td>Status</td>
+        <td>Uploaded By</td>
+        <td>Update</td>
+    </tr>
+    </thead>
+    <tbody>
+        @foreach (ProjectDetailViewModel viewModel in ViewBag.Projects)
+        {
+            <tr>
+                <td>@viewModel.ProjectName</td>
+                <td>@viewModel.CodeName</td>
+                <td>@viewModel.StartDate</td>
+                <td>@viewModel.EndDate</td>
+                <td>@viewModel.Status</td>
+                <td>@viewModel.UploadedBy</td>
+                <td>@Html.ActionLink("Update","UpdateProjectDetail", new {projectId = viewModel.Id})</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

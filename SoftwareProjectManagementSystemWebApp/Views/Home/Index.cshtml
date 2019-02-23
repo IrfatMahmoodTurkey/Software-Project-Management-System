@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Project Management System</h1>
+    <p class="lead">Simple Software for a software firm to manage project files</p>
+
+</div>
+
+<div class="row">
+    @{
+        if (ViewBag.Designation.Equals("IT Admin"))
+        {
+            <div class="col-md-4">
+                <h2>Add User</h2>
+                <p>@Html.ActionLink("Go=>>", "SaveUser", "User", null, new { @class = "btn btn-default" })</p>
+            </div>
+
+            <div class="col-md-4">
+                <h2>View All User</h2>
+                <p>@Html.ActionLink("Go=>>", "ViewAllUsers", "User", null, new { @class = "btn btn-default" })</p>
+            </div>
+        }
+        else if (ViewBag.Designation.Equals("Project Manager"))
+        {
+            <div class="col-md-4">
+                <h2>Add New Project</h2>
+                <p>@Html.ActionLink("Go=>>", "AddProject", "Project", null, new { @class = "btn btn-default" })</p>
+            </div>
+
+            <div class="col-md-4">
+                <h2>View Projects</h2>
+                <p>@Html.ActionLink("Go=>>", "ViewAllProject", "Project", null, new { @class = "btn btn-default" })</p>
+            </div>
+
+            <div class="col-md-4">
+                <h2>Assign User</h2>
+                <p>@Html.ActionLink("Go=>>", "AssignUser", "Project", null, new { @class = "btn btn-default" })</p>
+            </div>
+
+            <div class="col-md-4">
+                <h2>Involved Projects</h2>
+                <p>@Html.ActionLink("Go=>>", "ViewProjectInvolve", "Project", null, new { @class = "btn btn-default" })</p>
+            </div>
+
+            <div class="col-md-4">
+                <h2>Add Task</h2>
+                <p>@Html.ActionLink("Go=>>", "AddTask", "Task", null, new { @class = "btn btn-default" })</p>
+            </div>
+
+            <div class="col-md-4">
+                <h2>Add Comment</h2>
+                <p>@Html.ActionLink("Go=>>", "AddComment", "Comment", null, new { @class = "btn btn-default" })</p>
+            </div>
+        }
+        else
+        {
+            <div class="col-md-4">
+                <h2>Assign User</h2>
+                <p>@Html.ActionLink("Go=>>", "AssignUser", "Project", null, new { @class = "btn btn-default" })</p>
+            </div>
+
+            <div class="col-md-4">
+                <h2>Involved Projects</h2>
+                <p>@Html.ActionLink("Go=>>", "ViewProjectInvolve", "Project", null, new { @class = "btn btn-default" })</p>
+            </div>
+
+            <div class="col-md-4">
+                <h2>Add Task</h2>
+                <p>@Html.ActionLink("Go=>>", "AddTask", "Task", null, new { @class = "btn btn-default" })</p>
+            </div>
+
+            <div class="col-md-4">
+                <h2>Add Comment</h2>
+                <p>@Html.ActionLink("Go=>>", "AddComment", "Comment", null, new { @class = "btn btn-default" })</p>
+            </div>
+        }
+    }
+</div>

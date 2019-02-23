@@ -1,0 +1,73 @@
+﻿@model SoftwareProjectManagementSystemWebApp.Models.Comment
+
+@{
+    ViewBag.Title = "AddComment";
+}
+
+<h2>AddComment</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(l=>l.ProjectId, "Project Name")
+    <br/>
+    @Html.DropDownListFor(d=>d.ProjectId, new SelectList(ViewBag.Projects, "Value","Text"), new {@class="form-control"})
+    <br/>
+    @Html.ValidationMessageFor(v=>v.ProjectId)
+    <br/>
+    
+    @Html.LabelFor(l=>l.TaskId, "Select Task")
+    <br/>
+    @Html.DropDownListFor(d=>d.TaskId, new SelectList(""), "-- Select Task --", new {@class="form-control"})
+    <br/>
+    @Html.ValidationMessageFor(v=>v.TaskId)
+    <br/>
+    
+    @Html.LabelFor(l=>l.CommentDescription, "Comment")
+    <br/>
+    @Html.TextAreaFor(d => d.CommentDescription, new {@class="form-control", rows=5})
+    <br/>
+    @Html.ValidationMessageFor(v => v.CommentDescription)
+    <br/>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Add Comment" class="btn btn-default" />
+        </div>
+    </div>
+    <br/>
+    <label>@ViewBag.Response</label>
+    <br/>
+    @Html.ActionLink("Back","Index","Home")
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#ProjectId").change(function () {
+                var projectId = $("#ProjectId").val();
+                var json = { projectId: projectId };
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetTaskByProjectId", "Comment")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(json),
+                    success: function (data) {
+                        $("#TaskId").empty();
+                        $("#TaskId").append('<option value = "">-- Select Task --</option>');
+                        $.each(data, function (key, value) {
+                            $("#TaskId").append('<option value=' + value.Id + '>' + value.Description + '</option>');
+
+                        });
+
+                    }
+                });
+            });
+        });
+    </script>
+}
+
